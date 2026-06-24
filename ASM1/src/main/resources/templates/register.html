@@ -1,0 +1,44 @@
+<form action="#" th:action="@{/register}" th:object="${user}" method="post">
+    <div>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" th:field="*{firstName}" />
+        <div th:if="${#fields.hasErrors('firstName')}"
+             th:errors="*{firstName}">
+
+        </div>
+    </div>
+    <!-- Add other form fields similarly -->
+    <!-- Last Name    -->
+    <div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" th:field="*{lastName}" />
+        <div th:if="${#fields.hasErrors('lastName')}"
+             th:errors="*{lastName}">
+        </div>
+    </div>
+    <!--    Email -->
+    <div>
+        <label for="email"> Email:</label>
+        <input type="text" id="email" th:field="*{email}" />
+        <div th:if="${#fields.hasErrors('email')}"
+             th:errors="*{email}">
+        </div>
+    </div>
+    <!--    Password-->
+    <div>
+        <label for="password"> Password:</label>
+        <input type="text" id="password" th:field="*{password}" />
+        <div th:if="${#fields.hasErrors('password')}"
+             th:errors="*{password}">
+        </div>
+    </div>
+    <!--    Age-->
+    <div>
+        <label for="age"> Age:</label>
+        <input type="text" id="age" th:field="*{age}" />
+        <div th:if="${#fields.hasErrors('age')}"
+             th:errors="*{age}">
+        </div>
+    </div>
+    <button type="submit">Register</button>
+</form>

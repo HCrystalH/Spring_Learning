@@ -1,0 +1,55 @@
+Problem Description:
+Task 1: Create a User Entity with Validation
+• Create a class named User.java in the model package that represents a user in the system:
+• Contains the following attributes:
+1. String firstName
+2. String lastName
+3. String email
+4. String password
+5. int age
+• Add validation annotations to the class to enforce the following rules:
+o The firstName and lastName fields must not be empty and should have at least 2
+characters.
+o The email field must be a valid email address.
+o The password field must be between 8 and 20 characters long.
+o The age field must be greater than or equal to 18.
+• Hint: Use Spring's javax.validation.constraints annotations like @NotNull, @Size, @Email, and
+@Min.
+Task 2: Create a Registration Form
+• Create a Thymeleaf template named register.html that displays a registration form with fields for
+first name, last name, email, password, and age.
+Use Thymeleaf form tags (<form:form> and <form:input>) to bind the form fields to the User model
+object.
+• Include error messages for each field. When a validation error occurs, display the error message
+next to the corresponding input field.
+• Example template snippet for the firstName field:
+<form action="#" th:action="@{/register}" th:object="${user}" method="post">
+<div>
+<label for="firstName">First Name:</label>
+<input type="text" id="firstName" th:field="*{firstName}" />
+<div th:if="${#fields.hasErrors('firstName')}"
+th:errors="*{firstName}"></div>
+</div>
+<!-- Add other form fields similarly -->
+<button type="submit">Register</button>
+</form>
+Task 3: Create a Controller for Handling Registration
+• Create a controller class named UserController.java in the controller package.
+• This controller should:
+1. Serve the registration page via a GET request to /register.
+2. Handle form submission via a POST request to /register.
+3. Validate the User object upon form submission using Spring’s @Valid annotation.
+4. If validation fails, return the user to the registration form with validation error messages.
+5. If validation is successful, redirect the user to a success page.
+• Hint: Use @Valid for validation and BindingResult to check for errors.
+Task 4: Create a Success Page
+• Create a Thymeleaf template named registerSuccess.html that displays a success message after
+the user successfully registers.
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Registration Success</title>
+</head>
+<body>
+<h2>Registration Successful!</h2>
+<p>Thank you for registering.</p>
