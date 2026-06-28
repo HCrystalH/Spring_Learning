@@ -1,0 +1,20 @@
+package Ex2.fa.training.controller;
+
+import Ex2.fa.training.controller.base.GenericController;
+import Ex2.fa.training.entity.Student;
+import Ex2.fa.training.service.StudentService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/students")
+public class StudentController extends GenericController<Student,Long>{
+    public StudentController(StudentService studentService){
+        super(studentService,"./students","student");
+    }
+
+    @Override
+    protected Class<Student> getEntityClass() {
+        return Student.class;
+    }
+}

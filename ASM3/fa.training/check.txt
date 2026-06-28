@@ -1,0 +1,28 @@
+Problem Descriptions:
+We are beginning to build our Learning Management System (LMS). This task involves creating the
+core Course entity and a service to save/load course data from a file, all managed by the Spring container.
+Task 1: Create the Course Entity
+Write a class named Course.java in the model package that implements Serializable and has:
+1. Four attributes: String title, String instructorName, String description, int durationHours.
+2. One constructor with all attributes as parameters.
+3. One function: void displayInfo(). For example: The course "Spring Framework" will print: [Course:
+Spring Framework] by John Doe (40 hours): Learn Spring Core, MVC, and Boot.
+Task 2: Create the CourseService
+Write a class named CourseService.java in the service package that has:
+a. Function void saveCourses(List<Course> courses): This will save the list of courses passed in the
+parameter to a file named courses.dat.
+(Hint: Use ObjectOutputStream).
+b. Function List<Course> getCourses(): This will read the courses.dat file and return its content as a
+List<Course>.
+(Hint: Use ObjectInputStream).
+Task 3: Create the Test Class
+Write a class named Test.java in the main package that has:
+a. Attribute: CourseService courseService;
+b. A main method, where you should:
+• Create a list of Course objects (e.g., 2-3 courses).
+• Call the saveCourses() method from courseService to save this list to the file.
+Call the getCourses() method from courseService to get the list of saved courses.
+• Loop through the retrieved list and call the displayInfo() method for each course.
+Note: You must configure Spring to create a bean for the CourseService class and inject that bean into the
+courseService attribute of the Test.java class (using either XML configuration or Annotation-based
+configuration).

@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    padding: 40px;
+    color: #333;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+input[type="text"],
+textarea,
+input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.btn {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #1d4ed8;
+}
+
+.success {
+    background-color: #d1fae5;
+    color: #065f46;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.table-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #2563eb;
+    color: white;
+}
+
+th, td {
+    padding: 14px;
+    text-align: left;
+}
+
+tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.download-btn {
+    background-color: #10b981;
+    color: white;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.download-btn:hover {
+    background-color: #059669;
+}
+
+.empty-message {
+    text-align: center;
+    color: gray;
+    padding: 20px;
+}

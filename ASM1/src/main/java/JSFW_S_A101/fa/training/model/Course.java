@@ -1,7 +1,13 @@
 package JSFW_S_A101.fa.training.model;
 
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Course {
     @NotBlank(message="The title must not be empty")
     @Size(min=5, message =" The title must have at least 5 characters")
@@ -22,57 +28,6 @@ public class Course {
     @NotNull(message = "The duration hour must not be NULL")
     @Min(value = 1, message = "The duration Hour must be at least 1")
     Integer durationHours;
-
-    public Course() {
-    }
-
-    public Course(String title, String instructorName, String instructorEmail, String description, Integer durationHours) {
-        this.title = title;
-        this.instructorName = instructorName;
-        this.instructorEmail = instructorEmail;
-        this.description = description;
-        this.durationHours = durationHours;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getInstructorName() {
-        return instructorName;
-    }
-
-    public void setInstructorName(String instructorName) {
-        this.instructorName = instructorName;
-    }
-
-    public String getInstructorEmail() {
-        return instructorEmail;
-    }
-
-    public void setInstructorEmail(String instructorEmail) {
-        this.instructorEmail = instructorEmail;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getDurationHours() {
-        return durationHours;
-    }
-
-    public void setDurationHours(Integer durationHours) {
-        this.durationHours = durationHours;
-    }
 
     @Override
     public String toString() {
