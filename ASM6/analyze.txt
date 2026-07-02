@@ -1,0 +1,37 @@
+ANALYSIS OF HomeController.java
+
+File: src/main/java/fa/training/ASM6/controller/HomeController.java
+
+STRUCTURE
+- Annotated @Controller + @RequiredArgsConstructor (Lombok constructor injection)
+- Injects CourseService, CategoryService, ReviewService
+- Single endpoint: GET mapping on "/"
+
+ENDPOINT: GET /
+- Accepts optional query param "page" (default 0)
+- Fetches a page of published courses (10 per page) via courseService.findPublishedCourses
+- Adds to model: courses (list), currentPage, totalPages, categories, recentReviews
+- Returns view name: "index"
+
+PROBLEMS
+
+1. [CRITICAL] View name mismatch — returns "index" but template is home.html
+   Thymeleaf is configured with suffix ".html" and prefix "classpath:/templates/".
+   It will look for templates/index.html, which does not exist.
+   The only home template is templates/home.html.
+   Fix: Change return to "home" or rename home.html to index.html.
+
+2. [MINOR] No explicit page size constant
+   The page size 10 is hardcoded as a magic number. Recommend extracting to a constant.
+
+3. [MINOR] Missing @RequestMapping on class
+   Other controllers use @RequestMapping at class level for path organization.
+   HomeController lacks it (acceptable for root mapping, but inconsistent with codebase style).
+
+4. [OBSERVATION] Model attributes align with home.html template
+   The view expects: ${courses}, ${currentPage}, ${totalPages}, ${categories}, ${recentReviews}.
+   All are correctly populated — once the view name is fixed, this will render properly.
+
+SUMMARY
+The controller logic is correct and well-structured. The single blocking issue is the
+return string "index" instead of "home", which will cause a 500 error at runtime.

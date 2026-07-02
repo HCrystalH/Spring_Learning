@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--html namespace -->
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/header :: head(${course.id == null} ? 'Create Course' : 'Edit Course')"></head>
+
+<body>
+    <div th:replace="fragments/nav-instructor :: nav"></div>
+
+    <div class="container">
+        <div class="main-content">
+            <h2 th:text="${course.id == null ? 'Create New Course' : 'Edit Course'}">Course Form</h2>
+
+            <form th:action="${course.id == null} ?
+                    @{/instructor/courses} :
+                    @{/instructor/courses/{id}/edit(id=${course.id})}"
+                  th:object="${course}" method="post" class="course-form">
+
+                <!-- Course Title -->
+                <div class="form-group">
+                    <label for="title">Course Title</label>
+                    <input type="text" id="title" th:field="*{title}"
+                           class="form-control"
+                           placeholder="Enter course title"
+                           required>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="description">Short Description</label>
+                    <textarea id="description" th:field="*{description}"
+                              class="form-control" rows="3"
+                              placeholder="Write a brief summary..."
+                              required>
+                    </textarea>
+                </div>
+
+                <!-- Content -->
+                <div class="form-group">
+                    <label for="content">Course Content (Markdown)</label>
+                    <textarea id="content" th:field="*{content}"
+                              class="form-control" rows="10"
+                              placeholder="#Markdown content here..."
+                              required>
+                    </textarea>
+                </div>
+
+                <!-- Categories -->
+                <div class="form-group">
+                    <label for="category">Categories (comma-separated)</label>
+                    <input type="text" id="category" th:field="*{category}" class="form-control" placeholder="e.g. Java, Web, Spring">
+                </div>
+
+                <!-- Status -->
+                <div th:if="${course.id != null}" class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" class="form-control" disabled>
+                        <option th:selected="${course.status == 1}">Draft</option>
+                        <option th:selected="${course.status == 2}">Published</option>
+                        <option th:selected="${course.status == 3}">Archived</option>
+                    </select>
+                </div>
+
+                <!-- Buttons -->
+                <div class="form-actions">
+                    <button type="submit" name="action" value="draft" class="btn btn-secondary">Save Draft</button>
+                    <button type="submit" name="action" value="publish" class="btn btn-primary">Publish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+
+</html>

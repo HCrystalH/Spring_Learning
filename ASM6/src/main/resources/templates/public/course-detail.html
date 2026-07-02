@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--html namespace -->
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/header :: head(${course.title})">
+    <title> Course Detail</title>
+</head>
+
+<body>
+    <!--Use the fragment named "nav" from templates/fragments/nav-public.html-->
+    <div th:replace="fragments/nav-public :: nav"></div>
+
+    <div class="container">
+        <div class="main-content">
+            <article class="course-detail">
+                <h1 th:text="${course.title}"> Course Title</h1>
+
+                <!--Display if course has categories -->
+                <div class= "course-categories"
+                     th:if="${course.category != null and !course.category.isEmpty()}"
+                >
+                    Categories:
+                    <!--
+                        example: Java, Spring, BA
+                        split into Java Spring BA
+                    -->
+                    <span th:each="category : ${course.category.split(',') }">
+                        <!-- example <a href="/courses/category?name=Java"> Java </a> -->
+                        <a  th:href="@{/courses/categories(name=${#strings.trim(category)})}"
+                            th:text="${#strings.trim(category)}"
+                            class="category-badge">
+                            Category
+                        </a>
+                    </span>
+                </div>
+
+                <p class="course-description" th:text="${course.description}"> Description </p>
+
+                <div class="course-content">
+                    <div class="content-header">Course Content </div>
+
+                    <!--
+                        th:text - escape HTML vs th:utext - render HTML as HTML
+                        First : escape & to &amp -> avoid malformed HTML
+                        Second: Convert newlines
+                            Hello
+                            World
+                        into
+                            Hello <br>
+                            World
+                        => Line break correctly in the browser
+                    -->
+                    <div class="content-body"
+                         th:utext="${#strings.replace(#strings.replace(course.content,'&','&amp;'),'\n','&lt;br&gt;')}">
+                        Content
+                    </div>
+
+                </div>
+            </article>
+
+            <section class="section reviews-section">
+                <h2> Student Reviews </h2>
+
+                <div th:each="review : ${reviews}" class="review-card">
+                    <strong> Author </strong>
+                    <div class="stars"
+                         th:text="${#strings.repeat('★',review.rating)
+                         + #strings.repeat('☆',5 - review.rating)}">
+                    </div>
+                    <p th:text="${review.content}"> Review Content </p>
+                </div>
+
+                <div th:if="${reviews.isEmpty()}" class="empty-state">
+                    <p> No approved reviews yet</p>
+                </div>
+
+            </section>
+
+            <section class="section review-form-section">
+                <h2> Add Your Review </h2>
+
+                <!--Display success msg after submit-->
+                <div th:if="${message != null}" class="alert alert-success">
+                    <p th:text="${message}"></p>
+                </div>
+                <!--
+                    Form to submit a review
+                    th:action - URL to submit the form
+                    th:object - bind the form to the Review object
+                    method = "post" - submit the form using POST method
+                -->
+                <form
+                    th:action="@{/courses/{id}/reviews(id=${course.id})}"
+                    th:object="${review}"
+                    method = "post"
+                    class ="review-form"
+                >
+                    <!-- Name -->
+                    <div class ="form-group">
+                        <label for="authorName"> Your Name</label>
+                        <input type="text" id="authorName" th:field="*{authorName}" class="form-control" required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class ="form-group">
+                        <label for="email"> Email </label>
+                        <input type="email" id="email" th:field="*{email}" class="form-control" required>
+                    </div>
+
+                    <!-- Rating  -->
+                    <div class="form-group">
+                        <label for="rating"> Rating </label>
+                        <select id="rating" th:field="*{rating}" class="form-control" required>
+                            <option value="">Select rating</option>
+                            <option value="1">1 - Poor</option>
+                            <option value="2">2 - Fair</option>
+                            <option value="3">3 - Good</option>
+                            <option value="4">4 - Very Good</option>
+                            <option value="5">5 - Excellent</option>
+                        </select>
+                    </div>
+
+                    <!-- Review  -->
+                    <div class="form-group">
+                        <label for="content"> Review</label>
+                        <textarea id="content" th:field="*{content}" class="form-control" rows="5" required>
+                        </textarea>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary"> Submit Review </button>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

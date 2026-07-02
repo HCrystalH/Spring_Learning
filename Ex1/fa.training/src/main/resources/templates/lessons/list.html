@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/main :: main('Lesson Detail', ~{::div.main-content})}">
+
+<body>
+<div class="main-content">
+
+    <!-- COURSE INFO -->
+    <div th:if="${course}" class="card bg-light mb-4 p-3" style="max-width: 500px;">
+        <h6 class="text-muted mb-2">Course Summary</h6>
+
+        <p class="mb-1">
+            <strong>Course Code:</strong>
+            <span th:text="${course.courseId.courseCode}"></span>
+        </p>
+
+        <p class="mb-0">
+            <strong>Start Date:</strong>
+            <span th:text="${course.courseId.startDate}"></span>
+        </p>
+    </div>
+
+    <!-- FORM -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">
+                <i class="bi bi-plus-circle"></i>
+                <span th:text="${lesson.lessonId != null} ? 'Edit Lesson' : 'Add Lesson'"></span>
+            </h5>
+        </div>
+
+        <div class="card-body">
+            <form th:action="@{/lessons/save}" method="post" class="row g-3">
+
+                <input type="hidden" name="lessonId" th:value="${lesson.lessonId}">
+                <input type="hidden" name="courseCode" th:value="${course.courseId.courseCode}">
+                <input type="hidden" name="startDate" th:value="${course.courseId.startDate}">
+
+                <div class="col-md-6">
+                    <label class="form-label">Lesson Name</label>
+                    <input type="text" name="lessonName"
+                           class="form-control"
+                           th:value="${lesson.lessonName}"
+                           required>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Duration</label>
+                    <input type="number" name="duration"
+                           class="form-control"
+                           th:value="${lesson.duration}"
+                           min="1"
+                           required>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Content Type</label>
+                    <select name="contentType" class="form-select" required>
+                        <option value="">-- Select --</option>
+                        <option value="VIDEO" th:selected="${lesson.contentType?.name() == 'VIDEO'}">Video</option>
+                        <option value="THEORY" th:selected="${lesson.contentType?.name() == 'THEORY'}">Theory</option>
+                        <option value="PRACTICE" th:selected="${lesson.contentType?.name() == 'PRACTICE'}">Practice</option>
+                    </select>
+                </div>
+
+                <div class="col-md-12">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-select" required>
+                        <option value="">-- Select --</option>
+                        <option value="DRAFT" th:selected="${lesson.status?.name() == 'DRAFT'}">Draft</option>
+                        <option value="OPEN" th:selected="${lesson.status?.name() == 'OPEN'}">Open</option>
+                        <option value="LOCKED" th:selected="${lesson.status?.name() == 'LOCKED'}">Locked</option>
+                    </select>
+                </div>
+
+                <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-success">
+                        Save
+                    </button>
+
+                    <a th:href="@{/lessons/{code}/{date}
+                        (code=${course.courseId.courseCode},
+                         date=${course.courseId.startDate})}"
+                       class="btn btn-secondary ms-2">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- LIST -->
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0">List of Lessons</h5>
+        </div>
+
+        <div class="card-body p-0">
+
+            <div th:if="${#lists.isEmpty(lessons)}" class="alert alert-info m-3">
+                No lessons found.
+            </div>
+
+            <table class="table table-bordered mb-0"
+                   th:unless="${#lists.isEmpty(lessons)}">
+
+                <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Duration</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="l : ${lessons}">
+                    <td th:text="${l.lessonId}"></td>
+                    <td th:text="${l.lessonName}"></td>
+                    <td th:text="${l.duration}"></td>
+                    <td th:text="${l.contentType}"></td>
+
+                    <td>
+                        <span class="badge"
+                              th:classappend="${l.status.name() == 'OPEN'} ? 'bg-success'
+                              : (${l.status.name() == 'DRAFT'} ? 'bg-warning text-dark' : 'bg-secondary')"
+                              th:text="${l.status}">
+                        </span>
+                    </td>
+
+                    <td>
+                        <a th:href="@{/lessons/edit/{id}(id=${l.lessonId})}"
+                           class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+
+                        <a th:href="@{/lessons/delete/{id}(id=${l.lessonId})}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this lesson?')">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

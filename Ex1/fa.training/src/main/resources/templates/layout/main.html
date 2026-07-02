@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      th:fragment="main(pageTitle, content)">
+
+<head th:replace="layout/fragments :: head(${pageTitle})"></head>
+
+<body>
+
+    <header th:replace="layout/fragments :: header"></header>
+
+    <div class="main-wrapper">
+
+        <aside th:replace="layout/fragments :: sidebar"></aside>
+
+        <main class="content-area">
+
+            <div th:replace="${content}"> Loading... </div>
+
+        </main>
+
+    </div>
+
+    <footer th:replace="layout/fragments :: footer"></footer>
+
+    <th:block th:replace="layout/fragments :: scripts"></th:block>
+
+</body>
+
+</html>

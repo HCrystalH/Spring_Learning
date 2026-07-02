@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--html namespace -->
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/header :: head('Manage Courses')"></head>
+
+<body>
+<div th:replace="fragments/nav-instructor :: nav"></div>
+
+<div class="container">
+    <div class="main-content">
+        <!-- Message -->
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+        <div class="header-actions">
+            <h2>Manage Courses</h2>
+            <a href="/instructor/courses/new" class="btn btn-primary">+ Create New Course</a>
+        </div>
+
+        <!-- Table -->
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Categories</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="course : ${courses}">
+                <!-- Title -->
+                <td th:text="${course.title}"></td>
+
+                <!-- Status -->
+                <td>
+                    <span th:if="${course.status == 1}" class="badge badge-draft">DRAFT</span>
+                    <span th:if="${course.status == 2}" class="badge badge-published">PUBLISHED</span>
+                    <span th:if="${course.status == 3}" class="badge badge-archived">ARCHIVED</span>
+                </td>
+
+                <!-- Categories -->
+                <td th:text="${course.category}"></td>
+
+                <!-- Actions -->
+                <td class="actions">
+                    <a th:href="@{/instructor/courses/{id}/edit(id=${course.id})}" class="btn btn-sm">Edit</a>
+                    <form th:action="@{/instructor/courses/{id}/delete(id=${course.id})}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+
+                    <form th:if="${course.status != 2}" th:action="@{/instructor/courses/{id}/publish(id=${course.id})}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-success">Publish</button>
+                    </form>
+
+                    <form th:if="${course.status == 2}" th:action="@{/instructor/courses/{id}/unpublish(id=${course.id})}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-warning">Unpublish</button>
+                    </form>
+
+                    <form th:if="${course.status != 3}" th:action="@{/instructor/courses/{id}/archive(id=${course.id})}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-secondary">Archive</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Empty  -->
+        <div th:if="${courses.isEmpty()}" class="empty-state">
+            <p>No courses yet. Create your first course!</p>
+        </div>
+
+        <!-- Paging bar  -->
+        <div th:if="${totalPages > 1}" class="pagination">
+            <a th:if="${currentPage > 0}"
+               th:href="@{/instructor/courses(page=${currentPage - 1})}">
+                &laquo; Prev
+            </a>
+
+            <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                <a th:href="@{/instructor/courses(page=${i})}"
+                   th:text="${i + 1}"
+                   th:classappend="${i == currentPage} ? 'active' : '' ">
+                </a>
+            </span>
+
+            <a th:if="${currentPage < totalPages - 1}"
+               th:href="@{/instructor/courses(page=${currentPage + 1})}">
+                Next &raquo;
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+
+</html>

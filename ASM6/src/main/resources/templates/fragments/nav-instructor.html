@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<body>
+
+<nav class="navbar" th:fragment="nav">
+    <div class="nav-container">
+        <a href="/" class="nav-brand"> CourseShare</a>
+
+        <!-- endpoint match with Controller -->
+        <div class="nav-links">
+            <a href="/instructor/dashboard"> Dashboard</a>
+            <a href="/instructor/courses">Manage Courses</a>
+            <a href="/instructor/reviews">Reviews</a>
+            <a href="/instructor/logout" class="btn-logout"> Logout</a>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--html namespace -->
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/header :: head('Dashboard')">
+    <title> Dashboard </title>
+</head>
+
+<body>
+    <div th:replace="fragments/nav-instructor :: nav"></div>
+
+    <div class ="container">
+        <div class ="main-content">
+            <!-- Message -->
+            <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+            <!-- Overview -->
+            <section class="section">
+                <h2>Dashboard Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" th:text="${totalCourses}">0</div>
+                        <div class="stat-label">Total Courses</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" th:text="${publishedCount}">0</div>
+                        <div class="stat-label">Published</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" th:text="${pendingReviews}">0</div>
+                        <div class="stat-label">Pending Reviews</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" th:text="${categoryCount}">0</div>
+                        <div class="stat-label">Categories</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="section">
+                <h2>Quick Actions</h2>
+                <div class="quick-actions">
+                    <a href="/instructor/courses/new" class="action-card">
+                        <span class="action-icon">+</span>
+                        <span>Create Course</span>
+                    </a>
+                    <a href="/instructor/courses" class="action-card">
+                        <span class="action-icon">&#9776;</span>
+                        <span>Manage Courses</span>
+                    </a>
+                    <a href="/instructor/reviews" class="action-card">
+                        <span class="action-icon">&#9998;</span>
+                        <span>Pending Reviews</span>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

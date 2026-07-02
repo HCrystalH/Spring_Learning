@@ -1,0 +1,106 @@
+COURSE SHARE - USER GUIDE
+==========================
+
+PREREQUISITES
+--------------
+- Java 21
+- Maven (wrapper included: ./mvnw or mvnw.cmd)
+
+QUICK START
+------------
+1. Build & run:
+      ./mvnw spring-boot:run        (Mac/Linux)
+      mvnw.cmd spring-boot:run      (Windows)
+
+2. Open browser: http://localhost:8080
+
+SEED DATA
+----------
+The project includes src/main/resources/data.sql which auto-runs on startup.
+It inserts sample data using H2's MERGE INTO (safe to restart, no duplicates).
+
+    Instructor: admin / admin123
+    Categories: java, spring, python, javascript, database
+    Courses: 4 published + 1 draft
+    Reviews: 3 approved + 2 pending
+
+If you want a fresh start, delete ./data/courseshare.mv.db and restart.
+
+PUBLIC FEATURES
+----------------
+Home page:        http://localhost:8080
+    - Lists published courses (paginated, 10/page)
+    - Sidebar: category tag cloud + recent reviews
+
+Course detail:    http://localhost:8080/courses/1
+    - View course content, approved reviews
+    - Submit a new review (pending approval)
+
+Categories:       http://localhost:8080/categories
+    - Browse all categories with course counts
+
+Reviews:          http://localhost:8080/reviews
+    - See all approved reviews across all courses
+
+INSTRUCTOR FEATURES
+--------------------
+Login:            http://localhost:8080/instructor/login
+    Credentials: admin / admin123
+
+Dashboard:        http://localhost:8080/instructor/dashboard
+    - Stats: total courses, published, pending reviews, categories
+
+Manage courses:   http://localhost:8080/instructor/courses
+    - Table of all courses with status badges
+    - Edit, delete, publish, unpublish, archive actions
+    - Pagination if >10 courses
+
+Create course:    http://localhost:8080/instructor/courses/new
+    - Form: title, description, content (markdown), categories (comma-separated)
+    - Save as Draft or Publish directly
+
+Manage reviews:   http://localhost:8080/instructor/reviews
+    - Two sections: pending reviews (approve/delete) + approved reviews (delete)
+    - Each section has independent pagination
+
+Logout:           Click "Logout" in the instructor nav bar
+
+DATABASE
+---------
+    Type:   H2 file-based (./data/courseshare.mv.db)
+    Console: http://localhost:8080/h2-console
+    JDBC:   jdbc:h2:file:./data/courseshare
+    User:   sa / (blank password)
+
+PROJECT STRUCTURE
+------------------
+    src/main/java/fa/training/ASM6/
+        entity/          - JPA entities (Course, Category, Instructor, Review, Lookup)
+        repository/      - Spring Data JPA repositories
+        service/         - Business logic layer
+        controller/      - MVC controllers
+        Asm6Application.java
+
+    src/main/resources/
+        templates/
+            index.html               - Home page
+            public/                   - Public-facing pages
+                course-detail.html
+                categories.html
+                reviews.html
+            instructor/               - Instructor-only pages
+                login.html
+                dashboard.html
+                manage-courses.html
+                course-form.html
+                manage-reviews.html
+            fragments/                - Shared Thymeleaf fragments
+                header.html
+                nav-public.html
+                nav-instructor.html
+                footer.html
+        static/
+            styles.css
+            main.js
+        application.properties
+        data.sql

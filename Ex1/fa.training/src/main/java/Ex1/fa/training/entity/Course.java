@@ -1,6 +1,7 @@
 package Ex1.fa.training.entity;
 
 import jakarta.persistence.Embedded;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -12,9 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode
 public class Course {
-    @Embedded
+    @EmbeddedId
     private CourseId courseId;
 
     @NotBlank(message= "Course Name can't be empty")

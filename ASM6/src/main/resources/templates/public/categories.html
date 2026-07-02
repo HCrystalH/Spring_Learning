@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/header :: head(${selectedCategory != null} ? 'Category: ' + ${selectedCategory} : 'All Categories')"></head>
+
+<body>
+    <div th:replace="fragments/nav-public :: nav"></div>
+
+    <div class="container">
+        <div class="main-content">
+            <section class="section">
+                <h2>Category Cloud</h2>
+
+                <div class="category-cloud">
+                    <a th:each="cat : ${categories}"
+                       th:href="@{/courses/categories(name=${cat.name})}"
+                       th:text="${cat.name + ' (' + cat.frequency + ')'}"
+                       th:style="'font-size: ' + (1 + ${cat.frequency} * 0.3) + 'em;'"
+                       class="category-tag"
+                       th:classappend="${#strings.equals(cat.name, selectedCategory)} ? 'active' : '' ">
+                    </a>
+                </div>
+
+                <div th:if="${categories.isEmpty()}" class="empty-state">
+                    <p>No categories available.</p>
+                </div>
+            </section>
+
+            <section class="section" th:if="${selectedCategory != null}">
+                <h2 th:text="'Courses in Category: ' + ${selectedCategory}">Courses in Category</h2>
+                <div th:each="course : ${courses}" class="course-card">
+                    <h3 th:text="${course.title}">Course Title</h3>
+                    <p th:text="${course.description}">Description</p>
+                    <a th:href="@{/courses/{id}(id=${course.id})}" class="btn btn-primary">View Course</a>
+                </div>
+
+                <div th:if="${courses.isEmpty()}" class="empty-state">
+                    <p>No courses in this category.</p>
+                </div>
+
+                <div th:if="${totalPages > 1}" class="pagination">
+                    <a th:if="${currentPage > 0}" th:href="@{/courses/category(name=${selectedCategory}, page=${currentPage - 1})}">&laquo; Prev</a>
+                    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                        <a th:href="@{/courses/category(name=${selectedCategory}, page=${i})}" th:text="${i + 1}"
+                           th:classappend="${i == currentPage} ? 'active' : ''"></a>
+                    </span>
+                    <a th:if="${currentPage < totalPages - 1}" th:href="@{/courses/category(name=${selectedCategory}, page=${currentPage + 1})}">Next &raquo;</a>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

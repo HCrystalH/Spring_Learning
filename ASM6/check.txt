@@ -1,0 +1,43 @@
+CHECK REPORT — LOGIN & DATA SEED FAILURE
+=========================================
+
+SYMPTOMS
+---------
+- App fails to start with ScriptStatementFailedException
+- Login doesn't work because no instructor exists in DB
+
+ROOT CAUSES FOUND & FIXED
+--------------------------
+
+1. [application.properties] Missing spring.sql.init.mode=always
+   The default mode "embedded" may skip data.sql in some setups.
+   → Added spring.sql.init.mode=always
+
+2. [data.sql] MERGE INTO missing id column — NULL not allowed
+   Tables use @GeneratedValue for id, but MERGE INTO without
+   specifying id tries to insert NULL into a NOT NULL column.
+   → Added explicit id values to all MERGE INTO statements
+
+3. [data.sql] Column name mismatch: entity uses @Column(name="lookup_value")
+   The Lookup entity maps field "value" to DB column "lookup_value",
+   but the SQL used "value" which doesn't exist in the table.
+   → Changed "value" to "lookup_value" in all MERGE INTO statements
+
+4. [data/courseshare.mv.db] Stale database file
+   Old DB was created before data.sql existed, so it had empty tables.
+   → Deleted old files to force fresh database creation
+
+CURRENT STATUS
+---------------
+✓ App starts successfully (Started Asm6Application in ~5s)
+✓ data.sql runs without errors on startup
+✓ Seed data inserted: 1 instructor, 5 categories, 5 courses, 5 reviews, 5 lookups
+
+HOW TO TEST
+-----------
+1. Run:   .\mvnw.cmd spring-boot:run
+2. Open:  http://localhost:8080
+3. Login: http://localhost:8080/instructor/login
+          Username: admin  |  Password: admin123
+4. H2 Console: http://localhost:8080/h2-console
+          JDBC URL: jdbc:h2:file:./data/courseshare

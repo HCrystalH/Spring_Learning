@@ -1,0 +1,98 @@
+PROBLEMS FOUND IN CODEBASE
+
+=======================================================================
+CRITICAL (WILL CAUSE RUNTIME OR BUILD FAILURE)
+=======================================================================
+
+1. [pom.xml] Non-existent Spring Boot starter dependencies
+   - spring-boot-starter-webmvc → should be spring-boot-starter-web
+   - spring-boot-starter-data-jpa-test → does not exist (use spring-boot-starter-test)
+   - spring-boot-starter-thymeleaf-test → does not exist (use spring-boot-starter-test)
+   - spring-boot-starter-validation-test → does not exist (use spring-boot-starter-test)
+   - spring-boot-starter-webmvc-test → does not exist (use spring-boot-starter-test)
+   These artifact IDs do not exist in any Spring Boot release. Maven build will fail.
+
+2. [repository/LookupRepository.java:13] Wrong JpaRepository type parameter
+   Interface extends JpaRepository<Review, Integer> but should be JpaRepository<Lookup, Integer>.
+   findAll() will return List<Review> instead of List<Lookup>. Mixing entity types will cause ClassCastException
+   or query failures at runtime.
+
+3. [entity/Review.java] Missing course relationship (no courseId or @ManyToOne)
+   Review entity has no courseId field or @ManyToOne to Course, yet ReviewRepository.java declares:
+   - findByCourseIdAndStatusOrderByCreatedAtDesc(Integer courseId, Integer status)
+   JPA will throw PropertyReferenceException because "courseId" is not a property of Review.
+   Either add a course field (e.g., @ManyToOne private Course course) or remove the query.
+
+4. [controller/HomeController.java:1-4] Empty controller with no @Controller annotation
+   HomeController is a plain class with no Spring stereotype annotation and no request mappings.
+   Template home.html expects model attributes (${courses}, ${categories}, ${recentReviews},
+   ${totalPages}, ${currentPage}) but nothing populates them. Home page will render with empty data
+   or throw template errors.
+
+5. [controller/CourseController.java:1-11] Stub controller with no request mappings
+   CourseController has @Controller and injects CourseService but defines no @GetMapping/@PostMapping.
+   Expected endpoints (/courses, /courses/{id}) are missing.
+
+6. [controller/CategoryController.java:1-11] Stub controller with no request mappings
+   CategoryController has @Controller and injects CategoryService but defines no endpoints.
+   Template home.html references /courses/category URLs but no handler exists.
+
+7. Missing templates for InstructorController
+   InstructorController returns view names "login" and "dashboard", but neither
+   templates/login.html nor templates/dashboard.html exist. Thymeleaf will throw
+   TemplateInputException at runtime.
+
+8. [templates/reviews.html] Empty template (0 bytes)
+   ReviewController maps GET /reviews to render "reviews", but the template file is empty.
+
+=======================================================================
+MODERATE (AFFECTS CORRECTNESS OR CODE QUALITY)
+=======================================================================
+
+9. [controller/ReviewController.java:16] Unused page parameter
+   Method getReviews(@RequestParam(defaultValue = "0") int page, Model model) accepts page but
+   never uses it. the service call returns a List (unpaginated) even though a page param is expected.
+
+10. [InstructorController multiple lines] Session auth check is manual and repeated
+    Only dashboard() checks session.getAttribute("instructor") == null. Other instructor endpoints
+    would fail silently (no guard). Should use a filter/interceptor or check consistently.
+
+11. [static/main.js] Empty JavaScript file
+    File exists but contains no code. If intended for future use, should be noted.
+
+12. [home.html] Inconsistent HTML attribute spacing
+    Multiple attributes have spaces around equals signs (e.g., href ="/", class ="course-categories").
+    While technically tolerated by browsers, they violate HTML conventions and reduce readability.
+
+13. [home.html:55] Thymeleaf string concatenation for star rating
+    ${#strings.repeat('★', review.rating) + #strings.repeat('☆', 5 - review.rating)}
+    The + operator in Thymeleaf templates may not behave as expected in SpEL; use ||
+    with literal concatenation or a computed helper method for reliability.
+
+=======================================================================
+MINOR (CODE SMELLS / BEST PRACTICES)
+=======================================================================
+
+14. [InstructorController:51] Unnecessarily numbered variable
+    Instructor instructor1 = instructorService.login(...) → should reuse parameter name.
+
+15. [application.properties] ddl-auto=create-drop with no seed data
+    Schema is dropped and recreated on every restart, but no data.sql or import.sql exists.
+    App starts with an empty database (no instructor accounts, no sample courses).
+
+16. [entity/Review.java:55] Status default set in @PrePersist
+    status defaults to 1 (PENDING) via @PrePersist rather than field initialization or @ColumnDefault.
+    Less discoverable and not applied when bypassing @PrePersist.
+
+17. [service/ReviewService.java:32] findPendingReviews accepts page/size but ignores pagination
+    Method creates Pageable but passes it to repository's findByStatus which returns Page<Review>.
+    The other service methods (findByCourseAndStatus, findByStatus) return List, not Page —
+    inconsistent pagination strategy across the service layer.
+
+18. [InstructorController:52] Typo in return statement
+    return  "redirect:/instructor/dashboard"; (double space before string)
+
+19. [entity/Course.java:34] category stored as comma-separated string
+    Category is a plain String column with comma-separated values. No join table and no many-to-many
+    relationship with Category entity. This duplicates data and creates sync issues between
+    Course.category strings and Category.frequency counters.

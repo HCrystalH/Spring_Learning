@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head th:replace="/fragments/header :: head('Home Page')"> </head>
+<body>
+    <div th:replace="fragments/nav-public :: nav"></div>
+
+    <div class="container">
+        <div class="main-content">
+            <section class="section">
+                <h1> Recent Published Courses</h1>
+
+                <!-- Course information -->
+                <div th:each="course : ${courses}" class="course-card">
+                    <h2 th:text="${course.title}"> Title </h2>
+
+                    <p th:text="${course.description}"> Description </p>
+
+                    <div
+                        class ="course-categories"
+                        th:if="${course.category !=null and !course.category.isEmpty()}">
+                        Categories: <span th:text="${course.category}"></span>
+                    </div>
+
+                    <a
+                        th:href="@{/courses/{id}(id=${course.id})}"
+                        class="btn btn-primary">
+                        View Details
+                    </a>
+                </div>
+
+                <!-- No course yet -->
+                <div th:if="${courses == null or courses.isEmpty()}" class ="empty-state">
+                    <p> No published courses yet</p>
+                </div>
+
+                <!-- Paging -->
+                <div th:if="${totalPages > 1}" class="pagination">
+                    <a
+                        th:if="${currentPage > 0}"
+                        th:href="@{/(page=${currentPage - 1})}"
+                    >
+                        &laquo; Prev
+                    </a>
+
+                    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                        <a
+                            th:href="@{/(page=${i})}"
+                            th:text="${i+1}"
+                            th:classappend="${i == currentPage} ? 'active' : '' "
+                        >
+                        </a>
+                    </span>
+
+                    <a
+                        th:if="${currentPage < totalPages - 1}"
+                        th:href="@{/(page=${currentPage + 1})}"
+                    >
+                        Next &raquo;
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <aside class ="sidebar">
+            <!-- Categories -->
+            <section class="section">
+                <h2> Categories</h2>
+                <div class="category-cloud">
+                    <a
+                        th:each ="category : ${categories}"
+                        th:href ="@{/courses/categories(name=${category.name})}"
+                        th:text ="${category.name}"
+                        th:style="|font-size:${1 + category.frequency * 0.3}em;|"
+                        class="category-tag"
+                    >
+                    </a>
+                </div>
+
+                <div th:if="${categories == null or categories.isEmpty()}" class="empty-state">
+                    <p> No category yet</p>
+                </div>
+            </section>
+
+            <!-- Most recent reviews -->
+            <section class = "section">
+                <h2> Most Recent Reviews </h2>
+                <div th:each="review : ${recentReviews}" class="review-mini">
+                    <strong th:text="${review.authorName}"> Author </strong>
+                    <div
+                        class ="stars"
+                        th:text="${#strings.repeat('★', review.rating) + #strings.repeat('☆', 5 - review.rating)}"
+                    >
+                    </div>
+                </div>
+                <div th:if="${recentReviews.isEmpty()}" class="empty-state">
+                    <p> No reviews yet</p>
+                </div>
+            </section>
+        </aside>
+    </div>
+</body>
+</html>

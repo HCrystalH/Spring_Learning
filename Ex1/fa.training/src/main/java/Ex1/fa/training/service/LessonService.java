@@ -2,15 +2,23 @@ package Ex1.fa.training.service;
 
 import Ex1.fa.training.entity.Course;
 import Ex1.fa.training.entity.Lesson;
+import Ex1.fa.training.repository.LessonRepository;
+import Ex1.fa.training.service.base.GenericServiceImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface LessonService {
-    Lesson save(Lesson lesson);
+@Service
+public class LessonService extends GenericServiceImpl<Lesson,Long> {
+    private final LessonRepository lessonRepository;
 
-    void delete(Long id);
+    public LessonService(LessonRepository lessonRepository) {
+        super(lessonRepository);
+        this.lessonRepository = lessonRepository;
+    }
 
-    Lesson findById(Long id);
-
-    List<Lesson> getLessons(Course course);
+    public List<Lesson> findByCourse(Course course){
+        return lessonRepository.findByCourse(course);
+    }
 }

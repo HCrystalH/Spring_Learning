@@ -35,7 +35,6 @@ public abstract class GenericController<T, ID>{
         return viewFolder + "/form";
     }
 
-    @PostMapping("/save")
     public String save(@ModelAttribute T entity){
         service.save(entity);
         return "redirect:/" + viewFolder;

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/header :: head('Manage Reviews')"></head>
+<!--PENDING/APPROVED REVIEWS PAGE (INSTRUCTOR) -->
+<body>
+    <div th:replace="fragments/nav-instructor :: nav"></div>
+
+    <div class="container">
+        <div class="main-content">
+            <!-- Message -->
+            <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+            <h2>Pending Reviews</h2>
+
+            <div th:each="review : ${reviews}" class="review-card">
+                <div class="review-course-title">
+                    Course: <a th:href="@{/courses/{id}(id=${review.course.id})}" th:text="${review.course.title}">Course Title</a>
+                </div>
+
+                <strong th:text="${review.authorName}">Reviewer</strong>
+                <div class="stars"
+                     th:text="${#strings.repeat('★', review.rating) + #strings.repeat('☆', 5 - review.rating)}">
+                </div>
+                <p th:text="${review.content}">Review content</p>
+
+                <!-- Buttons -->
+                <div class="actions">
+                    <form th:action="@{/instructor/reviews/{id}/approve(id=${review.id})}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                    </form>
+
+                    <form th:action="@{/instructor/reviews/{id}/delete(id=${review.id})}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Empty -->
+            <div th:if="${reviews.isEmpty()}" class="empty-state">
+                <p>No pending reviews.</p>
+            </div>
+
+            <!-- Pagination -->
+            <div th:if="${totalPages > 1}" class="pagination">
+                <a th:if="${currentPage > 0}"
+                   th:href="@{/instructor/reviews(page=${currentPage - 1})}">
+                    &laquo; Prev
+                </a>
+
+                <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a th:href="@{/instructor/reviews(page=${i})}" th:text="${i + 1}"
+                       th:classappend="${i == currentPage} ? 'active' : ''">
+                    </a>
+                </span>
+
+                <a th:if="${currentPage < totalPages - 1}" th:href="@{/instructor/reviews(page=${currentPage + 1})}">Next &raquo;</a>
+            </div>
+
+            <h2> Approved Reviews</h2>
+
+            <div th:each="review : ${approvedReviews}" class ="review-card">
+                <div class="review-course-title">
+                    Course: <a th:href="@{/courses/{id}(id=${review.course.id})}" th:text="${review.course.title}"> Course Title</a>
+                </div>
+
+                <strong th:text="${review.authorName}">Reviewer</strong>
+
+                <div class="stars"
+                     th:text="${#strings.repeat('★', review.rating) + #strings.repeat('☆', 5 - review.rating)}">
+                </div>
+                <p th:text="${review.content}">Review content</p>
+
+                <div class="actions">
+                    <form th:action="@{/instructor/reviews/{id}/delete(id=${review.id})}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+
+            <div th:if="${approvedReviews.isEmpty()}" class="empty-state">
+                <p>No approved reviews.</p>
+            </div>
+
+            <div th:if="${approvedTotalPages > 1}" class="pagination">
+                <a th:if="${approvedCurrentPage > 0}" th:href="@{/instructor/reviews(page=0, approvedPage=${approvedCurrentPage - 1})}">
+                    &laquo; Prev
+                </a>
+
+                <span th:each="i : ${#numbers.sequence(0, approvedTotalPages - 1)}">
+                    <a th:href="@{/instructor/reviews(page=0, approvedPage=${i})}"
+                       th:text="${i + 1}"
+                       th:classappend="${i == approvedCurrentPage} ? 'active' : ''"></a>
+                </span>
+
+                <a th:if="${approvedCurrentPage < approvedTotalPages - 1}"
+                   th:href="@{/instructor/reviews(page=0, approvedPage=${approvedCurrentPage + 1})}">
+                    Next &raquo;
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,229 @@
+# Ex 1 - LMS
+
+### MÔ TẢ DỰ ÁN:
+
+Xây dựng một ứng dụng Web dựa trên Spring Framework để quản lý các khóa học trong hệ thống **LMS**.
+
+### 1. Yêu cầu Cơ sở dữ liệu (Database requirements)
+
+**Bảng Course (Khóa học)**
+
+- `course_code` (Mã khóa học) — **Primary Key**
+- `start_date` (Ngày khai giảng) — **Primary Key** *(Khóa chính hỗn hợp)*
+- `course_name` (Tên khóa học)
+- `category` (Danh mục học tập / Chuyên ngành)
+- `instructor` (Giảng viên phụ trách)
+
+**Bảng Lesson (Bài học thuộc Khóa học)**
+
+- `course_code` (Mã khóa học) — *Foreign Key*
+- `start_date` (Ngày khai giảng) — *Foreign Key*
+- `lesson_name` (Tên bài học)
+- `duration` (Thời lượng tính theo phút)
+- `content_type` (Loại nội dung: Video, Lý thuyết, Thực hành)
+- `status` (Trạng thái bài học: Bản nháp, Đang mở, Đã khóa)
+
+### 2. Yêu cầu Giao diện (UI requirements)
+
+- Một trang web phải bao gồm 4 phần cơ bản: **Banner**, **MenuLeft**, **Body**, **Footer**.
+- **Trang chủ (Homepage)** chứa menu điều hướng ở `MenuLeft` gồm các mục:
+    - *Add a new Course* (Thêm mới Khóa học)
+    - *Courses Management* (Quản lý Khóa học)
+    - *Students Management* (Quản lý Học viên)
+- Phần `Body` mặc định hiển thị dòng chữ: *"WELCOME TO LMS MANAGEMENT SYSTEM - BASED ON SPRING FRAMEWORK"*.
+
++----------------------------------------------------------------------------------+
+|                                   HEADER                                         |
+|  Logo | LMS MANAGEMENT SYSTEM | Banner | Search Box | User/Profile Icon          |
++---------------------------+------------------------------------------------------+
+|                           |                                                      |
+|                           |                                                      |
+|                           |                                                      |
+|      LEFT SIDEBAR         |                  MAIN CONTENT                        |
+|                           |                                                      |
+|  + Add New Course         |                Body                                  |
+|  + Courses Management     |                                                      |
+|  + Students Management    |   WELCOME TO LMS MANAGEMENT SYSTEM                   |
+|                           |        BASED ON SPRING FRAMEWORK                     |
+|                           |                                                      |
+|        Menu Left          |                     Footer                           |
+|                           |                                                      |
++---------------------------+------------------------------------------------------+
+|                                   FOOTER                                         |
+|      ©2023 All rights reserved | Social Icons | Footer Text                      |
++----------------------------------------------------------------------------------+
+
+### 3. Các màn hình chức năng chi tiết
+
+### Chức năng 3.1: Thêm mới Khóa học (Course Detail Screen)
+
+- Khi người dùng nhấn vào liên kết **"Add a new Course"** từ Trang chủ:
+- Hệ thống hiển thị form nhập dữ liệu: cho phép người dùng nhập thông tin của Khóa học (`Mã khóa học`, `Ngày khai giảng`, `Tên khóa học`, `Danh mục`, `Giảng viên`).
+    - *Lưu ý:* Cặp giá trị (`Mã khóa học` + `Ngày khai giảng`) là duy nhất cho mỗi khóa học được mở.
+- Người dùng điền đầy đủ dữ liệu và nhấn nút **"Save Course"**.
+    - Thông tin khóa học mới sẽ được lưu xuống Cơ sở dữ liệu.
+    - Sau khi lưu thành công, hệ thống hiển thị thông báo dạng alert: *"Add a new Course successfully"*.
+    - Trang web giữ nguyên tại form vừa tạo và hiển thị thêm một liên kết tên là **"Lesson Detail"** để cho phép thêm các bài học vào khóa học vừa lưu.
+
++----------------------------------------------------------------------------------+
+|                                   HEADER                                         |
+| +----------------------------------------------------------------------------+   |
+| | Logo (LMS MANAGEMENT SYSTEM) | Banner | Search | User Profile              |   |
+| +----------------------------------------------------------------------------+   |
++----------------------+-----------------------------------------------------------+
+|                      |                                                           |
+|                      |  Success Message (Alert)                                  |
+|                      |  +----------------------------------------------------+   |
+|                      |  | ✓ Add a new Course successfully!                   |   |
+|                      |  +----------------------------------------------------+   |
+|                      |                                                           |
+|      LEFT MENU       |  Page Title                                              |
+|                      |  Lesson Detail | Thêm chi tiết bài học                   |
+|  • Add Course        |                                                           |
+|  • Courses           |  +----------------------------------------------------+   |
+|  • Students          |  |               Create New Course                    |   |
+|                      |  |----------------------------------------------------|   |
+|                      |  | Course ID           | Start Date                  |   |
+|                      |  | [___________]       | [__________]               |   |
+|                      |  |                                                    |   |
+|                      |  | Course Name                                       |   |
+|                      |  | [________________________________________]        |   |
+|                      |  |                                                    |   |
+|                      |  | Category                                          |   |
+|                      |  | [Dropdown ▼]                                     |   |
+|                      |  |                                                    |   |
+|                      |  | Instructor                                        |   |
+|                      |  | [________________________________________]        |   |
+|                      |  |                                                    |   |
+|                      |  | [Save Course] [Cancel]                            |   |
+|                      |  +----------------------------------------------------+   |
+|                      |                                                           |
++----------------------+-----------------------------------------------------------+
+|                                  FOOTER                                          |
+|               ©2023 - All rights reserved - Built with Spring Framework          |
++----------------------------------------------------------------------------------+
+### Chức năng 3.2: Chi tiết Bài học (Lesson Detail Screen)
+
+- Khi nhấn vào liên kết **"Lesson Detail"** từ màn hình chi tiết Khóa học:
+- Hệ thống hiển thị thông tin tóm tắt của Khóa học hiện tại (`Mã khóa học`, `Ngày khai giảng`) và một Form nhập thông tin bài học mới (`Tên bài học`, `Thời lượng`, `Loại nội dung`, `Trạng thái`).
++--------------------------------------------------------------------------------------+
+| Header                                                                               |
+|--------------------------------------------------------------------------------------|
+| Logo | LMS MANAGEMENT SYSTEM | Banner - Lesson Detail | Search | User Profile Icon   |
++-------------+-----------------------------------------------------------------------+
+|             |                                                                       |
+|             | Course Summary Card                                                   |
+|             | ------------------------------------------------------------          |
+|             | Course ID: CRS101                                                    |
+| Left Menu   | Start Date: 15/10/2023                                               |
+|             |                                                                       |
+|-------------|-----------------------------------------------------------------------|
+| Add Course  | Add/Edit Lesson Detail                                               |
+| Manage      | ------------------------------------------------------------          |
+| Courses     | Lesson Name      | Duration (mins)                                   |
+|             | Content Type     | Status                                            |
+| Manage      | [Save Lesson] [Cancel]                                               |
+| Students    |                                                                       |
+|             |-----------------------------------------------------------------------|
+|             | List of Lessons                                                      |
+|             |--------------------------------------------------------------         |
+|             | ID | Lesson | Duration | Content Type | Status | Actions             |
+|             |--------------------------------------------------------------         |
+|             | 1  | Intro to Java | 60 | Video | Active | Edit/Delete              |
+|             | 2  | Spring MVC    | 90 | Document | Active | Edit/Delete           |
+|             | 3  | JPA Concepts  | 75 | Video | Inactive | Edit/Delete            |
+|             |                                                                       |
++-------------+-----------------------------------------------------------------------+
+| Footer: ©2023 All rights reserved | Social Icons                                   |
++--------------------------------------------------------------------------------------+
+- Sau khi nhập và nhấn **"Save Lesson"**:
+    - Bài học được liên kết trực tiếp với Khóa học hiện tại và lưu vào DB.
+    - Danh sách các Bài học thuộc Khóa học đó sẽ được hiển thị ngay bên dưới form bằng một bảng (Table).
+- **Chức năng Sửa bài học (Edit Lesson):**
+    - Khi nhấn vào liên kết **"Edit"** của một dòng trong bảng, thông tin của bài học đó sẽ được điền ngược lại lên Form để chỉnh sửa.
+    - Người dùng thay đổi thông tin và nhấn **"Save Lesson"**, dữ liệu dưới bảng sẽ tự động cập nhật lại.
+- **Chức năng Xóa bài học (Delete Lesson):**
+    - Khi người dùng nhấn liên kết **"Delete"**, hệ thống hiển thị hộp thoại xác nhận: *"Do you want to delete this lesson?"*.
+    - Nếu chọn **"Yes"**, bài học tương ứng sẽ bị xóa khỏi cơ sở dữ liệu và bảng danh sách tự động cập nhật (refresh).
+- Nếu chọn **"No"**, hệ thống không thực hiện thao tác gì.
+
+---
+
+### 4. Yêu cầu Kiến trúc Tổng quát (Architecture - Generic Pattern)
+
+Áp dụng mô hình **Generic Service & Generic Controller** để tối ưu tái sử dụng code (tham khảo `genericDemo.txt`).
+
+#### 4.1. Công nghệ sử dụng (Technology Stack)
+- **Spring Boot MVC** (Spring Web)
+- **Spring Data JPA** + **Hibernate**
+- **Thymeleaf** (View Template)
+- **Lombok** (`@Data`, `@Entity`,...)
+- **H2 Database** (file-based cho dev) hoặc **MySQL** (production)
+
+#### 4.2. Cấu trúc Project (Project Structure)
+```
+src/main/java/com/example/lms
+├── controller
+│   ├── base
+│   │   └── GenericController.java
+│   └── CourseController.java
+├── model
+│   ├── Course.java
+│   └── Lesson.java
+├── repository
+│   ├── CourseRepository.java
+│   └── LessonRepository.java
+├── service
+│   ├── base
+│   │   ├── GenericService.java
+│   │   └── GenericServiceImpl.java
+│   └── CourseService.java
+└── LmsApplication.java
+```
+
+#### 4.3. Generic Service Layer
+- **`GenericService<T, ID>`** — Interface định nghĩa CRUD: `findAll()`, `findById(id)`, `save(entity)`, `deleteById(id)`.
+- **`GenericServiceImpl<T, ID>`** — Abstract class implement generic CRUD dùng `JpaRepository<T, ID>`.
+- **`CourseService`** — Kế thừa `GenericServiceImpl<Course, CourseId>` (với `CourseId` là composite key `course_code + start_date`).
+
+#### 4.4. Generic Controller Layer
+- **`GenericController<T, ID>`** — Abstract Controller cung cấp các endpoint mặc định:
+  - `GET /` -> list
+  - `GET /create` -> form tạo mới
+  - `GET /edit/{id}` -> form chỉnh sửa
+  - `POST /save` -> lưu entity
+  - `GET /delete/{id}` -> xóa entity
+- **`CourseController`** — Kế thừa `GenericController<Course, CourseId>`, cấu hình `viewFolder = "courses"`, `modelName = "course"`.
+
+#### 4.5. View Templates (Thymeleaf)
+- Thư mục: `/src/main/resources/templates/courses/`
+  - `list.html` — Hiển thị danh sách khóa học
+  - `form.html` — Form thêm/sửa khóa học
+- Thư mục: `/src/main/resources/templates/lessons/`
+  - `list.html` — Danh sách bài học theo khóa học
+  - `form.html` — Form thêm/sửa bài học
+- Layout chung: `header`, `menuLeft`, `footer` dùng **Thymeleaf fragments** hoặc layout dialect.
+
+#### 4.6. Cấu hình application.properties
+```properties
+spring.datasource.url=jdbc:h2:file:./data/lmsdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=password
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
+```
+
+#### 4.7. Composite Key cho Course
+Vì `course_code` + `start_date` là khóa chính hỗn hợp, cần tạo **`CourseId.java`** (Embeddable class) và dùng `@IdClass` hoặc `@EmbeddedId` trên `Course.java`.
+
+---
+
+### 5. Yêu cầu bổ sung (Lessons CRUD với Generic Pattern)
+- **LessonController** (hoặc tích hợp vào CourseController) kế thừa `GenericController` với các thao tác CRUD cho Lesson.
+- Lesson có khóa chính đơn (`Long id`), thuận lợi cho Generic.
+- Lesson liên kết với Course qua `@ManyToOne` (khóa ngoại `course_code` + `start_date`).

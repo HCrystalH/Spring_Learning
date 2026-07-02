@@ -1,0 +1,48 @@
+2026-07-01 22:48:31.296830+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 22:49:59.055718+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 22:55:21.254763+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 22:56:38.474283+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 22:59:07.839558+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 23:00:22.015371+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 23:01:03.442906+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 23:01:34.433927+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 23:04:41.777892+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 23:11:05.442551+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 23:14:53.450065+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 23:21:19.738424+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 23:23:30.502144+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 23:27:05.222397+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 23:28:55.400950+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]
+2026-07-01 23:30:39.394182+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), [*]value varchar(255), primary key (rn_)) transactional"; expected "identifier"; SQL statement:
+create global temporary table HTE_tbl_lookup(id integer, rn_ integer not null, lookupKey varchar(255), type varchar(255), value varchar(255), primary key (rn_)) transactional [42001-240]

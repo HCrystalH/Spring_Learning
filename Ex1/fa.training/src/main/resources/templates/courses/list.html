@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: main(
+            'Courses Management',
+            ~{::main}
+      )}">
+
+<main class="main-content">
+
+    <!-- Page Header -->
+    <section class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="page-title">
+                Courses Management
+            </h2>
+
+            <p class="text-muted">
+                Manage all available courses in the system.
+            </p>
+
+        </div>
+
+        <div>
+            <a th:href="@{/courses/create}"
+               class="btn btn-primary">
+
+                <i class="bi bi-plus-circle"></i>
+                Add New Course
+
+            </a>
+
+            <a th:href="@{/courses}" class="btn btn-info">
+                <i class="bi bi-upload"></i>
+                Import
+            </a>
+
+            <a th:href="@{/courses}" class="btn btn-warning">
+                <i class="bi bi-download"></i>
+                Export
+            </a>
+        </div>
+
+    </section>
+
+    <!-- Empty State -->
+    <div th:if="${#lists.isEmpty(courses)}"
+         class="alert alert-info">
+
+        No courses found.
+
+        <a th:href="@{/courses/create}"
+           class="alert-link">
+
+            Add your first course
+
+        </a>
+
+    </div>
+
+    <!-- Course Table -->
+    <section th:unless="${#lists.isEmpty(courses)}">
+
+        <table class="table table-bordered table-hover bg-white">
+
+            <thead class="table-dark">
+
+            <tr>
+                <th>Course Code</th>
+                <th>Start Date</th>
+                <th>Course Name</th>
+                <th>Category</th>
+                <th>Instructor</th>
+                <th class="text-center">Actions</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="course : ${courses}">
+
+                <td th:text="${course.courseId.courseCode}"></td>
+
+                <td th:text="${course.courseId.startDate}"></td>
+
+                <td th:text="${course.courseName}"></td>
+
+                <td th:text="${course.category}"></td>
+
+                <td th:text="${course.instructor}"></td>
+
+                <td class="text-center">
+
+                    <a
+                        th:href="@{/lessons/{code}/{date}
+                        (code=${course.courseId.courseCode},
+                        date=${course.courseId.startDate})}"
+                        class="btn btn-info btn-sm text-white">
+
+                        <i class="bi bi-book"></i>
+                        Lessons
+
+                    </a>
+
+                    <a th:href="@{/courses/delete/{code}/{date}
+                        (code=${course.courseId.courseCode},
+                        date=${course.courseId.startDate})}"
+                        class="btn btn-danger btn-sm"
+                        onclick="return confirm('Are you sure?')">
+
+                        <i class="bi bi-trash"></i>
+                        Delete
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</main>
+
+</html>
